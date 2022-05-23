@@ -1,0 +1,18 @@
+{
+  "name": "jetoauth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/OECU-Developer/jetOauth",
+  "bugs":{
+    "url" : "ttps://github.com/OECU-Developer/jetOauth/issues",
+    "email" : "future-normal@googlegroups.com"
+  },
+  "keywords": [],
+  "author": "FutureNormla <future-normal@googlegroups.com> (https://github.com/OECU-Developer)",
+  "license": "MIT",
+  "type": "module"
+}
