@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "contributors": [
+    "Tonoyama",
+    "tsubasa652 <tsubasa652@tsubasa.ml> (https://github.com/tsubasa652)",
+    "terusibata",
+    "kamitani2001",
+    "noli-noli"
+  ],
   "homepage": "https://github.com/OECU-Developer/jetOauth",
   "bugs":{
     "url" : "ttps://github.com/OECU-Developer/jetOauth/issues",
