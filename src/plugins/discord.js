@@ -32,7 +32,7 @@ function discord(config, expire){
             return res.redirect(`https://discordapp.com/oauth2/authorize?${params.toString()}`)
         },
         callback: async function (req, res){
-            if(req?.signedCookies?.jetoauth) return false
+            if(!req?.signedCookies?.jetoauth) return false
             const session = new sessionManager(req.signedCookies.jetoauth)
             const state = session.get("state")
             if(state != req?.query?.state) return false
