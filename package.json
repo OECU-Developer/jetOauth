@@ -2,14 +2,21 @@
   "name": "jetoauth",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "contributors": [
+    "Tonoyama",
+    "tsubasa652 <tsubasa652@tsubasa.ml> (https://github.com/tsubasa652)",
+    "terusibata",
+    "kamitani2001",
+    "noli-noli"
+  ],
   "homepage": "https://github.com/OECU-Developer/jetOauth",
-  "bugs":{
-    "url" : "ttps://github.com/OECU-Developer/jetOauth/issues",
-    "email" : "future-normal@googlegroups.com"
+  "bugs": {
+    "url": "ttps://github.com/OECU-Developer/jetOauth/issues",
+    "email": "future-normal@googlegroups.com"
   },
   "repository": {
     "type": "git",
@@ -18,5 +25,14 @@
   "keywords": [],
   "author": "FutureNormla <future-normal@googlegroups.com> (https://github.com/OECU-Developer)",
   "license": "MIT",
-  "type": "module"
+  "files": [
+    "index.js",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "uuid": "^8.3.2"
+  }
 }
