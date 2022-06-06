@@ -1,6 +1,4 @@
 const sessionManager = require("./utill/sessionManager")
-const cookie = require("cookie")
-const cookieSignature = require("cookie-signature")
 const fs = require("fs")
 const path = require("path")
 
@@ -24,15 +22,15 @@ function jetOauth(config = {}){
     const pluginFiles = fs.readdirSync(pluginsDir).filter(plugin => /\.js$/.test(plugin))
     const plugins = {}
 
-    for(let pluginFile of pluginFiles){
+    for(const pluginFile of pluginFiles){
         const plugin = require(path.join(pluginsDir, pluginFile))
         if(config.providers[plugin.provider]){
-            plugins[plugin.provider] = plugin(config.providers[plugin.provider], cookie, expire)
+            plugins[plugin.provider] = plugin(config.providers[plugin.provider], expire)
         }
     }
 
-    return function (req, res, next){
-        if(req.methods == "OPTIONS"){
+    return async function (req, res, next){
+        if(req.method == "OPTIONS"){
             return next()
         }
 
@@ -40,11 +38,11 @@ function jetOauth(config = {}){
             isLogin: false
         }
 
-        if(req?.signedCookies?.jetoauth){
+        if(sessionManager?.session?.has(req?.signedCookies?.jetoauth)){
             const session = new sessionManager(req.signedCookies.jetoauth)
-            if(session.get("expire") <= Date.now()){
+
+            if(session.get("expire") >= Date.now()){
                 req.jetOauth = {
-                    ...req.jetOauth,
                     session,
                     isLogin: true,
                     logout: () => logout(res, session)
@@ -52,8 +50,8 @@ function jetOauth(config = {}){
             }
         }
 
-        if(req.methods == "GET" && /^\/jetoauth\/(login|callback)\/(.+)$/.test(req.path)){
-            const provider = replace(req.path, /^\/jetoauth\/(login|callback)\//, "")
+        if(req.method == "GET" && /^\/jetoauth\/(login|callback)\/(.+)$/.test(req.path)){
+            const provider = req.path.replace(/^\/jetoauth\/(login|callback)\//, "")
             switch(true){
                 case /^\/jetoauth\/login\/(.+)$/.test(req.path):
                     if(plugins[provider]){
@@ -63,11 +61,15 @@ function jetOauth(config = {}){
                     break
                 case /^\/jetoauth\/callback\/(.+)$/.test(req.path):
                     if(plugins[provider]){
-                        if(plugins[provider].callback(req, res)){
-                            res.redirect(config?.redirect?.success || "/jetOauth/success")
+                        let result = false
+                        try{
+                            result = await plugins[provider].callback(req, res)
+                        }catch(e){}
+                        if(result){
+                            res.redirect(config?.redirect?.success || "/jetoauth/success")
                             return next(false)
                         }else{
-                            res.redirect(config?.redirect?.fail || "/jetOauth/fail")
+                            res.redirect(config?.redirect?.fail || "/jetoauth/fail")
                             return next(false)
                         }
                     }
@@ -75,7 +77,7 @@ function jetOauth(config = {}){
             }
         }
         
-        if(req.methods == "GET" && /^\/jetoauth\/logout$/.test(req.path) && req.jetOauth.isLogin){
+        if(req.method == "GET" && /^\/jetoauth\/logout$/.test(req.path) && req.jetOauth.isLogin){
             req.jetOauth.logout()
             res.redirect(config?.redirect?.logout || "/")
             return next(false)
