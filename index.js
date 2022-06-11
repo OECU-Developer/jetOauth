@@ -4,6 +4,6 @@
  * MIT Licensed
  */
 
-'use strict'
+"use strict";
 
-exports = module.exports = require('./src/jetOauth')
+exports = module.exports = require("./src/jetOauth");
