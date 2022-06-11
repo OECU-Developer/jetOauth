@@ -32,7 +32,6 @@ class Github extends oauth {
                 Accept: "application/json",
             },
         });
-		console.log(response)
         if (response.status != 200) return false;
         const { access_token, refresh_token, expires_in } =
             await response.json();
