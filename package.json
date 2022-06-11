@@ -1,7 +1,7 @@
 {
   "name": "jetoauth",
   "version": "1.0.0",
-  "description": "",
+  "description": "Middleware for express that facilitates the implementation of multi-provider login functions using OAuth2.0.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,5 +34,9 @@
   "dependencies": {
     "node-fetch": "^2.6.7",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1"
   }
 }
