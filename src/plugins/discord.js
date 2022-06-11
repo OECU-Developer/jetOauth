@@ -34,7 +34,7 @@ function discord(config, expire) {
                 `https://discordapp.com/oauth2/authorize?${params.toString()}`
             );
         },
-        callback: async function (req, res) {
+        callback: async function (req) {
             if (!req?.signedCookies?.jetoauth) return false;
             const session = new sessionManager(req.signedCookies.jetoauth);
             const state = session.get("state");

@@ -73,7 +73,7 @@ function jetOauth(config = {}) {
                     if (plugins[provider]) {
                         let result = false;
                         try {
-                            result = await plugins[provider].callback(req, res);
+                            result = await plugins[provider].callback(req);
                         } catch (e) {}
                         if (result) {
                             res.redirect(
