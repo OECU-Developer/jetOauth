@@ -16,10 +16,10 @@ class provider {
     }
 
     async login(req, res) {
-        params = new URLSearchParams({
+        const params = new URLSearchParams({
             response_type: "code",
             client_id: this.client_id,
-            scope: scope.join(" "),
+            scope: this.scope.join(" "),
         });
 
         const sessionID = uuid();
@@ -55,16 +55,13 @@ class provider {
             code,
             redirect_uri,
         });
-        const response = await fetch(
-            this.apiURL.token,
-            {
-                method: "POST",
-                body: params,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }
-        );
+        const response = await fetch(this.apiURL.token, {
+            method: "POST",
+            body: params,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
         if (response.status != 200) return false;
         const { access_token, refresh_token, expires_in } =
             await response.json();
@@ -73,14 +70,11 @@ class provider {
         session.set("token_expire", Date.now() + expires_in * 1000);
         session.delete("state");
 
-        const userInfoResponse = await fetch(
-            this.apiURL.userInfo,
-            {
-                headers: {
-                    Authorization: `Bearer ${access_token}`,
-                },
-            }
-        );
+        const userInfoResponse = await fetch(this.apiURL.userInfo, {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
         if (userInfoResponse.status != 200) return false;
         const userInfo = await userInfoResponse.json();
         for (const key in userInfo) {
@@ -89,3 +83,4 @@ class provider {
         return true;
     }
 }
+exports = module.exports = provider;
