@@ -5,7 +5,7 @@ function imgur(config, expire) {
     const apiURL = {
         auth: "https://api.imgur.com/oauth2/authorize",
         token: "https://api.imgur.com/oauth2/token",
-        userInfo: "https://api.imgur.com/3/account/me/block",
+        userInfo: "https://api.imgur.com/3/account/me/settings",
     };
     return new oauth(config, expire, provider, apiURL);
 }
