@@ -10,7 +10,7 @@ function test(config, expire) {
     const params = new URLSearchParams({
         response_type: "code",
         client_id,
-        scope: scope.join(" ")
+        scope: scope.join(" "),
     });
 
     return {
@@ -48,16 +48,13 @@ function test(config, expire) {
                 code,
                 redirect_uri,
             });
-            const response = await fetch(
-                "http://localhost:3000/token",
-                {
-                    method: "POST",
-                    body: params,
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                }
-            );
+            const response = await fetch("http://localhost:3000/token", {
+                method: "POST",
+                body: params,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            });
             if (response.status != 200) return false;
             const { access_token, refresh_token, expires_in } =
                 await response.json();
@@ -66,14 +63,11 @@ function test(config, expire) {
             session.set("token_expire", Date.now() + expires_in * 1000);
             session.delete("state");
 
-            const userInfoResponse = await fetch(
-                "http://localhost:3000/user",
-                {
-                    headers: {
-                        Authorization: `Bearer ${access_token}`,
-                    },
-                }
-            );
+            const userInfoResponse = await fetch("http://localhost:3000/user", {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
             if (userInfoResponse.status != 200) return false;
             const userInfo = await userInfoResponse.json();
             for (const key in userInfo) {
