@@ -1,5 +1,5 @@
 const oauth = require("../utill/provider");
-const provider = "yahoo";
+const provider = "yahoojapan";
 
 function yahoo(config, expire) {
     const apiURL = {
