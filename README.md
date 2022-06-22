@@ -16,7 +16,7 @@
 
 <table>
 <tr>
-	<th>Provider</th>
+	<th>Document</th>
 	<th>Maintained by</th>
 </tr>
 <tr>
