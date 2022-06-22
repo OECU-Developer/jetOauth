@@ -13,7 +13,6 @@
 
 <div align="center">
     <h2>Supported Providers</h2>
-</div>
 
 <table>
 <tr>
@@ -77,3 +76,4 @@
 </tr>
 
 </table>
+</div>
